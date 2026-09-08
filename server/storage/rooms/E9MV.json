@@ -1,0 +1,339 @@
+{
+  "id": "E9MV",
+  "hostId": "p_eiufv368",
+  "status": "lobby",
+  "rules": {
+    "neighborhoodPreset": "HOMETOWN_USA",
+    "customSpaceNames": {},
+    "buildingStyle": "TINY_MANSION",
+    "freeParkingJackpot": true,
+    "freeParkingSeed": 100,
+    "doubleGoBonus": true,
+    "noRentInJail": false,
+    "snakeEyesBonus": true,
+    "snakeEyesReward": 500,
+    "rentNegotiation": true,
+    "auctionsEnabled": false,
+    "startingCash": 1500,
+    "unlimitedHouses": false,
+    "buildWithoutMonopoly": false,
+    "mercyRuleNetWorth": 0
+  },
+  "buildingStyle": {
+    "id": "TINY_MANSION",
+    "label": "Tiny Home ➔ Luxury Mansion",
+    "desc": "Starts with modern Tiny Homes and culminates in a Grand Luxury Mansion.",
+    "singleName": "Tiny Home",
+    "singlePlural": "Tiny Homes",
+    "topName": "Luxury Mansion",
+    "singleIcon": "🛖",
+    "topIcon": "🏰"
+  },
+  "spaceNames": {
+    "0": "PAYDAY",
+    "1": "Maple Street",
+    "2": "City Council",
+    "3": "Elm Avenue",
+    "4": "HOA Annual Dues",
+    "5": "Downtown Express Bus",
+    "6": "Oak Lane",
+    "7": "Travel",
+    "8": "Cedar Boulevard",
+    "9": "Pine Way",
+    "10": "City Hall / Detained",
+    "11": "Walnut Street",
+    "12": "Power & Light Co.",
+    "13": "Spruce Avenue",
+    "14": "Birch Lane",
+    "15": "Crosstown Commuter Rail",
+    "16": "Willow Court",
+    "17": "City Council",
+    "18": "Cypress Drive",
+    "19": "Magnolia Way",
+    "20": "Town Square",
+    "21": "Hickory Street",
+    "22": "Travel",
+    "23": "Sycamore Avenue",
+    "24": "Chestnut Boulevard",
+    "25": "North Suburban Rail",
+    "26": "Ash Way",
+    "27": "Beech Street",
+    "28": "Municipal Water Works",
+    "29": "Poplar Avenue",
+    "30": "Report to City Hall",
+    "31": "Alder Lane",
+    "32": "Redwood Boulevard",
+    "33": "City Council",
+    "34": "Juniper Way",
+    "35": "Metro Rapid Transit",
+    "36": "Travel",
+    "37": "Sunset Strip",
+    "38": "City Beautification Fee",
+    "39": "Grand Boulevard"
+  },
+  "players": [
+    {
+      "id": "p_eiufv368",
+      "name": "SpecHost",
+      "color": "#e74c3c",
+      "tokenIcon": "skateboard",
+      "money": 1500,
+      "position": 0,
+      "inJail": false,
+      "jailTurns": 0,
+      "getOutOfJailCards": {
+        "chance": false,
+        "communityChest": false
+      },
+      "bankrupt": false,
+      "connected": false,
+      "isBot": false
+    },
+    {
+      "id": "bot_b6dwu4a",
+      "name": "Neighbor Charlie 🤖",
+      "color": "#3b82f6",
+      "tokenIcon": "skateboard",
+      "money": 1500,
+      "position": 0,
+      "inJail": false,
+      "jailTurns": 0,
+      "getOutOfJailCards": {
+        "chance": false,
+        "communityChest": false
+      },
+      "bankrupt": false,
+      "connected": true,
+      "isBot": true
+    }
+  ],
+  "currentTurnIndex": 0,
+  "turnPhase": "ROLL",
+  "dice": [
+    1,
+    1
+  ],
+  "doublesCount": 0,
+  "lastRollWasDoubles": false,
+  "freeParkingPot": 100,
+  "properties": {
+    "1": {
+      "ownerId": null,
+      "houses": 0,
+      "mortgaged": false
+    },
+    "3": {
+      "ownerId": null,
+      "houses": 0,
+      "mortgaged": false
+    },
+    "5": {
+      "ownerId": null,
+      "houses": 0,
+      "mortgaged": false
+    },
+    "6": {
+      "ownerId": null,
+      "houses": 0,
+      "mortgaged": false
+    },
+    "8": {
+      "ownerId": null,
+      "houses": 0,
+      "mortgaged": false
+    },
+    "9": {
+      "ownerId": null,
+      "houses": 0,
+      "mortgaged": false
+    },
+    "11": {
+      "ownerId": null,
+      "houses": 0,
+      "mortgaged": false
+    },
+    "12": {
+      "ownerId": null,
+      "houses": 0,
+      "mortgaged": false
+    },
+    "13": {
+      "ownerId": null,
+      "houses": 0,
+      "mortgaged": false
+    },
+    "14": {
+      "ownerId": null,
+      "houses": 0,
+      "mortgaged": false
+    },
+    "15": {
+      "ownerId": null,
+      "houses": 0,
+      "mortgaged": false
+    },
+    "16": {
+      "ownerId": null,
+      "houses": 0,
+      "mortgaged": false
+    },
+    "18": {
+      "ownerId": null,
+      "houses": 0,
+      "mortgaged": false
+    },
+    "19": {
+      "ownerId": null,
+      "houses": 0,
+      "mortgaged": false
+    },
+    "21": {
+      "ownerId": null,
+      "houses": 0,
+      "mortgaged": false
+    },
+    "23": {
+      "ownerId": null,
+      "houses": 0,
+      "mortgaged": false
+    },
+    "24": {
+      "ownerId": null,
+      "houses": 0,
+      "mortgaged": false
+    },
+    "25": {
+      "ownerId": null,
+      "houses": 0,
+      "mortgaged": false
+    },
+    "26": {
+      "ownerId": null,
+      "houses": 0,
+      "mortgaged": false
+    },
+    "27": {
+      "ownerId": null,
+      "houses": 0,
+      "mortgaged": false
+    },
+    "28": {
+      "ownerId": null,
+      "houses": 0,
+      "mortgaged": false
+    },
+    "29": {
+      "ownerId": null,
+      "houses": 0,
+      "mortgaged": false
+    },
+    "31": {
+      "ownerId": null,
+      "houses": 0,
+      "mortgaged": false
+    },
+    "32": {
+      "ownerId": null,
+      "houses": 0,
+      "mortgaged": false
+    },
+    "34": {
+      "ownerId": null,
+      "houses": 0,
+      "mortgaged": false
+    },
+    "35": {
+      "ownerId": null,
+      "houses": 0,
+      "mortgaged": false
+    },
+    "37": {
+      "ownerId": null,
+      "houses": 0,
+      "mortgaged": false
+    },
+    "39": {
+      "ownerId": null,
+      "houses": 0,
+      "mortgaged": false
+    }
+  },
+  "bankHouses": 32,
+  "bankHotels": 12,
+  "chanceDeck": [
+    6,
+    2,
+    9,
+    11,
+    12,
+    7,
+    0,
+    5,
+    4,
+    8,
+    13,
+    10,
+    14,
+    3,
+    1
+  ],
+  "chanceIndex": 0,
+  "communityChestDeck": [
+    6,
+    5,
+    9,
+    13,
+    0,
+    2,
+    10,
+    14,
+    11,
+    1,
+    15,
+    4,
+    8,
+    12,
+    7,
+    3
+  ],
+  "communityChestIndex": 0,
+  "pendingAuction": null,
+  "pendingTrade": null,
+  "pendingRent": null,
+  "lastJailEvent": null,
+  "lastDrawnCard": null,
+  "lastPropertyEvent": null,
+  "lastCreditorId": null,
+  "winner": null,
+  "spectators": [],
+  "netWorths": {
+    "p_eiufv368": 1500,
+    "bot_b6dwu4a": 1500
+  },
+  "logs": [
+    {
+      "id": "2ohjjhe",
+      "timestamp": 1788910589399,
+      "text": "Room E9MV created. Rules configured.",
+      "type": "info"
+    },
+    {
+      "id": "aeglb2o",
+      "timestamp": 1788910589399,
+      "text": "SpecHost joined the lobby.",
+      "type": "info"
+    },
+    {
+      "id": "fj17e9h",
+      "timestamp": 1788910589400,
+      "text": "Neighbor Charlie 🤖 joined the lobby.",
+      "type": "info"
+    },
+    {
+      "id": "pcosf25",
+      "timestamp": 1788910589911,
+      "text": "SpecHost lost connection.",
+      "type": "info"
+    }
+  ]
+}

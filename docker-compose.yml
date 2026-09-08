@@ -1,0 +1,19 @@
+version: '3.8'
+
+services:
+  monopoly-game:
+    build: .
+    container_name: monopoly-lan-cloud
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      - PORT=3000
+      - HOST=0.0.0.0
+      - NODE_ENV=production
+    volumes:
+      - monopoly_data:/app/server/storage/rooms
+
+volumes:
+  monopoly_data:
+    driver: local

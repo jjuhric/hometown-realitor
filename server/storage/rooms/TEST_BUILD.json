@@ -1,0 +1,362 @@
+{
+  "id": "TEST_BUILD",
+  "hostId": "p1",
+  "status": "playing",
+  "rules": {
+    "neighborhoodPreset": "HOMETOWN_USA",
+    "customSpaceNames": {},
+    "buildingStyle": "TINY_MANSION",
+    "freeParkingJackpot": true,
+    "freeParkingSeed": 100,
+    "doubleGoBonus": true,
+    "noRentInJail": false,
+    "snakeEyesBonus": true,
+    "snakeEyesReward": 500,
+    "rentNegotiation": true,
+    "auctionsEnabled": false,
+    "startingCash": 2500,
+    "unlimitedHouses": false,
+    "buildWithoutMonopoly": false,
+    "mercyRuleNetWorth": 0
+  },
+  "buildingStyle": {
+    "id": "TINY_MANSION",
+    "label": "Tiny Home ➔ Luxury Mansion",
+    "desc": "Starts with modern Tiny Homes and culminates in a Grand Luxury Mansion.",
+    "singleName": "Tiny Home",
+    "singlePlural": "Tiny Homes",
+    "topName": "Luxury Mansion",
+    "singleIcon": "🛖",
+    "topIcon": "🏰"
+  },
+  "spaceNames": {
+    "0": "PAYDAY",
+    "1": "Maple Street",
+    "2": "City Council",
+    "3": "Elm Avenue",
+    "4": "HOA Annual Dues",
+    "5": "Downtown Express Bus",
+    "6": "Oak Lane",
+    "7": "Travel",
+    "8": "Cedar Boulevard",
+    "9": "Pine Way",
+    "10": "City Hall / Detained",
+    "11": "Walnut Street",
+    "12": "Power & Light Co.",
+    "13": "Spruce Avenue",
+    "14": "Birch Lane",
+    "15": "Crosstown Commuter Rail",
+    "16": "Willow Court",
+    "17": "City Council",
+    "18": "Cypress Drive",
+    "19": "Magnolia Way",
+    "20": "Town Square",
+    "21": "Hickory Street",
+    "22": "Travel",
+    "23": "Sycamore Avenue",
+    "24": "Chestnut Boulevard",
+    "25": "North Suburban Rail",
+    "26": "Ash Way",
+    "27": "Beech Street",
+    "28": "Municipal Water Works",
+    "29": "Poplar Avenue",
+    "30": "Report to City Hall",
+    "31": "Alder Lane",
+    "32": "Redwood Boulevard",
+    "33": "City Council",
+    "34": "Juniper Way",
+    "35": "Metro Rapid Transit",
+    "36": "Travel",
+    "37": "Sunset Strip",
+    "38": "City Beautification Fee",
+    "39": "Grand Boulevard"
+  },
+  "players": [
+    {
+      "id": "p1",
+      "name": "Alice",
+      "color": "#e74c3c",
+      "tokenIcon": "car",
+      "money": 2400,
+      "position": 0,
+      "inJail": false,
+      "jailTurns": 0,
+      "getOutOfJailCards": {
+        "chance": false,
+        "communityChest": false
+      },
+      "bankrupt": false,
+      "connected": true,
+      "isBot": false
+    },
+    {
+      "id": "p2",
+      "name": "Bob",
+      "color": "#3498db",
+      "tokenIcon": "car",
+      "money": 2500,
+      "position": 0,
+      "inJail": false,
+      "jailTurns": 0,
+      "getOutOfJailCards": {
+        "chance": false,
+        "communityChest": false
+      },
+      "bankrupt": false,
+      "connected": true,
+      "isBot": false
+    }
+  ],
+  "currentTurnIndex": 0,
+  "turnPhase": "ROLL",
+  "dice": [
+    1,
+    1
+  ],
+  "doublesCount": 0,
+  "lastRollWasDoubles": false,
+  "freeParkingPot": 100,
+  "properties": {
+    "1": {
+      "ownerId": "p1",
+      "houses": 1,
+      "mortgaged": false
+    },
+    "3": {
+      "ownerId": "p1",
+      "houses": 1,
+      "mortgaged": false
+    },
+    "5": {
+      "ownerId": null,
+      "houses": 0,
+      "mortgaged": false
+    },
+    "6": {
+      "ownerId": null,
+      "houses": 0,
+      "mortgaged": false
+    },
+    "8": {
+      "ownerId": null,
+      "houses": 0,
+      "mortgaged": false
+    },
+    "9": {
+      "ownerId": null,
+      "houses": 0,
+      "mortgaged": false
+    },
+    "11": {
+      "ownerId": null,
+      "houses": 0,
+      "mortgaged": false
+    },
+    "12": {
+      "ownerId": null,
+      "houses": 0,
+      "mortgaged": false
+    },
+    "13": {
+      "ownerId": null,
+      "houses": 0,
+      "mortgaged": false
+    },
+    "14": {
+      "ownerId": null,
+      "houses": 0,
+      "mortgaged": false
+    },
+    "15": {
+      "ownerId": null,
+      "houses": 0,
+      "mortgaged": false
+    },
+    "16": {
+      "ownerId": null,
+      "houses": 0,
+      "mortgaged": false
+    },
+    "18": {
+      "ownerId": null,
+      "houses": 0,
+      "mortgaged": false
+    },
+    "19": {
+      "ownerId": null,
+      "houses": 0,
+      "mortgaged": false
+    },
+    "21": {
+      "ownerId": null,
+      "houses": 0,
+      "mortgaged": false
+    },
+    "23": {
+      "ownerId": null,
+      "houses": 0,
+      "mortgaged": false
+    },
+    "24": {
+      "ownerId": null,
+      "houses": 0,
+      "mortgaged": false
+    },
+    "25": {
+      "ownerId": null,
+      "houses": 0,
+      "mortgaged": false
+    },
+    "26": {
+      "ownerId": null,
+      "houses": 0,
+      "mortgaged": false
+    },
+    "27": {
+      "ownerId": null,
+      "houses": 0,
+      "mortgaged": false
+    },
+    "28": {
+      "ownerId": null,
+      "houses": 0,
+      "mortgaged": false
+    },
+    "29": {
+      "ownerId": null,
+      "houses": 0,
+      "mortgaged": false
+    },
+    "31": {
+      "ownerId": null,
+      "houses": 0,
+      "mortgaged": false
+    },
+    "32": {
+      "ownerId": null,
+      "houses": 0,
+      "mortgaged": false
+    },
+    "34": {
+      "ownerId": null,
+      "houses": 0,
+      "mortgaged": false
+    },
+    "35": {
+      "ownerId": null,
+      "houses": 0,
+      "mortgaged": false
+    },
+    "37": {
+      "ownerId": null,
+      "houses": 0,
+      "mortgaged": false
+    },
+    "39": {
+      "ownerId": null,
+      "houses": 0,
+      "mortgaged": false
+    }
+  },
+  "bankHouses": 30,
+  "bankHotels": 12,
+  "chanceDeck": [
+    6,
+    4,
+    13,
+    2,
+    7,
+    14,
+    9,
+    3,
+    5,
+    1,
+    0,
+    10,
+    11,
+    12,
+    8
+  ],
+  "chanceIndex": 0,
+  "communityChestDeck": [
+    1,
+    14,
+    3,
+    0,
+    8,
+    4,
+    15,
+    9,
+    7,
+    2,
+    6,
+    11,
+    12,
+    13,
+    10,
+    5
+  ],
+  "communityChestIndex": 0,
+  "pendingAuction": null,
+  "pendingTrade": null,
+  "pendingRent": null,
+  "lastJailEvent": null,
+  "lastDrawnCard": null,
+  "lastPropertyEvent": {
+    "type": "BUILD",
+    "spaceId": 1,
+    "spaceName": "Maple Street",
+    "playerId": "p1",
+    "playerName": "Alice",
+    "playerColor": "#e74c3c",
+    "playerToken": "car",
+    "houses": 1,
+    "cost": 50,
+    "timestamp": 1788910580295
+  },
+  "lastCreditorId": null,
+  "winner": null,
+  "spectators": [],
+  "netWorths": {
+    "p1": 2620,
+    "p2": 2500
+  },
+  "logs": [
+    {
+      "id": "e23b8rh",
+      "timestamp": 1788910580289,
+      "text": "Room TEST_BUILD created. Rules configured.",
+      "type": "info"
+    },
+    {
+      "id": "n4f5ctn",
+      "timestamp": 1788910580289,
+      "text": "Alice joined the lobby.",
+      "type": "info"
+    },
+    {
+      "id": "tr730in",
+      "timestamp": 1788910580290,
+      "text": "Bob joined the lobby.",
+      "type": "info"
+    },
+    {
+      "id": "qbnfyvd",
+      "timestamp": 1788910580291,
+      "text": "Game started! It's Alice's turn.",
+      "type": "turn"
+    },
+    {
+      "id": "t9p7d8d",
+      "timestamp": 1788910580292,
+      "text": "🏗️ Alice built Tiny Home #1 on Elm Avenue for $50.",
+      "type": "success"
+    },
+    {
+      "id": "kjcuxmh",
+      "timestamp": 1788910580295,
+      "text": "🏗️ Alice built Tiny Home #1 on Maple Street for $50.",
+      "type": "success"
+    }
+  ]
+}

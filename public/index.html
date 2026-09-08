@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hometown Realitor - Neighborhood Property Trading Game</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Top Navigation & LAN Info -->
+  <header class="top-nav">
+    <div class="brand-section">
+      <span class="logo-badge" style="background: linear-gradient(135deg, #10b981, #047857); font-size: 1rem; letter-spacing: 1px;">HOMETOWN REALITOR</span>
+      <span style="font-size: 0.82rem; color: var(--text-muted);">Neighborhood Property Game</span>
+    </div>
+
+    <div class="lan-banner" id="lan-banner">
+      <span>🌐 Play with friends on Wi-Fi:</span>
+      <span class="lan-url" id="lan-url-text">Loading network address...</span>
+      <button class="btn-small" id="btn-copy-lan">Copy Link</button>
+    </div>
+
+    <div class="nav-actions">
+      <button class="btn-small" id="btn-toggle-sound">🔊 Sound On</button>
+      <button class="btn-small" id="btn-change-server" title="Connect to custom game backend" style="background: rgba(59, 130, 246, 0.2); border: 1px solid #3b82f6; font-size: 0.78rem;">⚙️ Server</button>
+      <span id="nav-room-badge" style="display:none; font-family: monospace; font-weight: bold; background: rgba(0,0,0,0.4); padding: 4px 10px; border-radius: 4px;"></span>
+      <button class="btn-small" id="btn-exit-game" style="display: none; background: #dc2626; color: white; border: 1px solid #ef4444; font-weight: bold; margin-left: 8px; cursor: pointer;">🚪 Exit Game</button>
+    </div>
+  </header>
+
+  <!-- Toast Notifications Container -->
+  <div class="toast-container" id="toast-container"></div>
+
+  <!-- SCREEN 1: LOBBY -->
+  <main class="screen active" id="lobby-screen">
+    <div class="lobby-container">
+      <div class="lobby-header">
+        <h2 style="color: #10b981;">🏡 Hometown Realitor</h2>
+        <p style="color: var(--text-muted);">The customizable neighborhood real estate & property trading game!</p>
+      </div>
+
+      <div class="lobby-grid">
+        <!-- Host Game Column -->
+        <div class="lobby-card">
+          <h3>👑 Host New Game</h3>
+          <div class="form-group">
+            <label>Your Player Name</label>
+            <input type="text" class="form-control" id="host-name" value="Player 1" maxlength="16">
+          </div>
+
+          <div class="form-group">
+            <label>Choose Token</label>
+            <div class="token-picker" id="host-token-picker"></div>
+          </div>
+
+          <div class="form-group">
+            <label>Choose Color</label>
+            <div class="color-picker" id="host-color-picker"></div>
+          </div>
+
+          <!-- Modifiable House Rules & Themes -->
+          <div class="form-group">
+            <label style="font-weight: bold; color: var(--accent-gold);">⚙️ Rules & Neighborhood Themes</label>
+            <div class="rules-list" id="rules-customizer-list">
+              <!-- Dynamically populated from rulesConfig -->
+            </div>
+            <button type="button" class="btn-small" id="btn-open-street-customizer" onclick="window.openStreetCustomizer ? window.openStreetCustomizer() : document.getElementById('modal-street-customizer')?.classList.add('open')" style="width: 100%; margin-top: 10px; background: rgba(56, 189, 248, 0.2); border: 1px solid #38bdf8; font-weight: bold; cursor: pointer;">🗺️ Customize Neighborhood Streets & Presets</button>
+          </div>
+
+          <button class="btn-primary" id="btn-create-room">Create Room & Host</button>
+        </div>
+
+        <!-- Join Game Column -->
+        <div class="lobby-card">
+          <h3>🎮 Join Existing Game</h3>
+          <div class="form-group">
+            <label>Room Code (4 Letters)</label>
+            <input type="text" class="form-control" id="join-room-code" placeholder="e.g. AB12" maxlength="6" style="text-transform: uppercase; font-family: monospace; font-size: 1.3rem; letter-spacing: 2px;">
+          </div>
+
+          <div class="form-group">
+            <label>Your Player Name</label>
+            <input type="text" class="form-control" id="join-name" value="Player 2" maxlength="16">
+          </div>
+
+          <div class="form-group">
+            <label>Choose Token</label>
+            <div class="token-picker" id="join-token-picker"></div>
+          </div>
+
+          <div class="form-group">
+            <label>Choose Color</label>
+            <div class="color-picker" id="join-color-picker"></div>
+          </div>
+
+          <button class="btn-secondary" id="btn-join-room" style="margin-top: 15px;">Join Game</button>
+          <button class="btn-secondary" id="btn-spectate-room" style="margin-top: 8px; background: rgba(99, 102, 241, 0.15); border-color: rgba(99, 102, 241, 0.4); color: #c7d2fe;">👁️ Spectate Game</button>
+
+          <!-- Reconnection Box -->
+          <div id="reconnect-box" style="display: none; background: rgba(59, 130, 246, 0.15); border: 1px solid var(--accent-blue); padding: 12px; border-radius: 8px; margin-top: 15px;">
+            <p style="font-size: 0.9rem; margin-bottom: 8px;">🔄 You have an active saved session!</p>
+            <button class="btn-small" id="btn-resume-session" style="width: 100%; padding: 8px;">Resume Saved Game</button>
+          </div>
+        </div>
+
+        <!-- Open Joinable Games Column -->
+        <div class="lobby-card" id="joinable-rooms-card">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+            <h3 style="margin: 0; display: flex; align-items: center; gap: 6px;">🏘️ Open Games</h3>
+            <button type="button" class="btn-small" id="btn-refresh-rooms" style="padding: 4px 10px; font-size: 0.8rem; cursor: pointer;">🔄 Refresh</button>
+          </div>
+          <p style="font-size: 0.82rem; color: var(--text-muted); margin-bottom: 12px;">Live games currently waiting for players on your local network:</p>
+          <div id="joinable-rooms-list" class="joinable-rooms-list">
+            <div style="text-align: center; color: var(--text-muted); padding: 30px 10px; font-size: 0.9rem;">
+              <span>🔍 Searching for open games...</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- SCREEN 2: WAITING ROOM -->
+  <section class="screen" id="room-waiting-screen">
+    <div class="waiting-box">
+      <h2>Game Lobby</h2>
+      <p style="color: var(--text-muted);">Share this room code with friends on your local Wi-Fi:</p>
+      <div class="room-code-display" id="waiting-room-code">----</div>
+      
+      <div class="player-slots" id="waiting-players-list">
+        <!-- Player items injected here -->
+      </div>
+
+      <div style="display: flex; gap: 10px; justify-content: center; margin-top: 20px; flex-wrap: wrap;">
+        <button class="btn-secondary" id="btn-add-bot" style="display: none; padding: 12px 18px;">🤖 Add AI Bot</button>
+        <button class="btn-primary" id="btn-start-game" style="display: none; padding: 12px 24px;">🚀 Start Game</button>
+        <button class="btn-secondary" id="btn-leave-waiting" style="padding: 12px 18px; background: rgba(220, 38, 38, 0.2); border: 1px solid #ef4444; color: #fca5a5; cursor: pointer;">🚪 Leave Lobby</button>
+        <div id="waiting-host-notice" style="color: var(--text-muted); font-style: italic;">Waiting for host to start the game...</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SCREEN 3: ACTIVE GAME BOARD -->
+  <section class="screen" id="game-screen">
+    <!-- Left HUD: Players & Net Worth Leaderboard -->
+    <aside class="game-left-panel">
+      <div class="panel-title" style="display: flex; justify-content: space-between; align-items: center;">
+        <span>🏆 Leaderboard</span>
+        <span style="font-size: 0.75rem; color: var(--accent-gold); font-weight: normal;">Live Net Worth</span>
+      </div>
+      <div class="hud-players" id="hud-players-container">
+        <!-- Player Cards Injected Here -->
+      </div>
+
+      <div class="panel-title" style="margin-top: 10px;">📜 Active Rules</div>
+      <div id="hud-rules-summary" style="font-size: 0.8rem; color: var(--text-muted); line-height: 1.5;"></div>
+    </aside>
+
+    <!-- Center: 2D Overhead Monopoly Board -->
+    <main class="game-center-board">
+      <div class="monopoly-board" id="monopoly-board-grid">
+        <!-- 40 spaces + Center Stage built by graphics.js -->
+      </div>
+    </main>
+
+    <!-- Right Panel: Game Log & Live Chat -->
+    <aside class="game-right-panel">
+      <div class="panel-title">📰 Activity Log</div>
+      <div class="log-box" id="activity-log-box"></div>
+
+      <div class="panel-title">💬 Chat</div>
+      <div class="chat-input-row">
+        <input type="text" class="form-control" id="chat-input" placeholder="Type message..." style="padding: 6px 10px; font-size: 0.85rem;">
+        <button class="btn-small" id="btn-send-chat">Send</button>
+      </div>
+    </aside>
+  </section>
+
+  <!-- Bottom Turn Action Controls -->
+  <footer class="turn-action-bar" id="turn-action-bar" style="display: none;">
+    <button class="action-btn btn-roll" id="btn-action-roll">🎲 Roll Dice</button>
+    <button class="action-btn btn-buy" id="btn-action-buy" style="display: none;">🏠 Buy Property</button>
+    <button class="action-btn btn-pass" id="btn-action-decline" style="display: none;">Decline</button>
+    <button class="action-btn" id="btn-action-trade">🤝 Propose Trade</button>
+    <button class="action-btn" id="btn-action-jail-fine" style="display: none; background: #d97706;">Pay $50 Fine</button>
+    <button class="action-btn" id="btn-action-jail-card" style="display: none; background: #8b5cf6;">Use Jail Card</button>
+    <button class="action-btn" id="btn-action-jail-roll" style="display: none; background: #f59e0b;">Roll for Doubles</button>
+    <button class="action-btn btn-end" id="btn-action-end" style="display: none;">End Turn</button>
+    <button class="action-btn" id="btn-action-liquidate" style="background: #ea580c; display: none;">⚡ Auto-Mortgage to Pay Debt</button>
+    <button class="action-btn" id="btn-action-bankruptcy" style="background: #dc2626; display: none;">Declare Bankruptcy</button>
+    <div id="spectator-action-notice" style="display: none; color: #c7d2fe; font-weight: 600; font-size: 0.95rem; align-items: center; justify-content: center; gap: 8px; width: 100%;">
+      <span>👁️</span> <span>Spectator Mode — Watching live gameplay. Actions disabled.</span>
+    </div>
+  </footer>
+
+  <!-- MODAL: Travel / City Council Card Draw -->
+  <div class="modal-overlay" id="modal-card-draw">
+    <div class="modal-card" style="max-width: 440px;">
+      <div class="card-draw-display" id="card-display-box">
+        <div class="card-type-title" id="card-draw-type">TRAVEL</div>
+        <div class="card-instruction-text" id="card-draw-text">Road trip across town! Advance to PAYDAY. Collect $200 Salary.</div>
+      </div>
+      <button class="btn-primary" id="btn-close-card" style="margin-top: 10px;">Acknowledge</button>
+    </div>
+  </div>
+
+  <!-- MODAL: Property Deed Inspector & Management -->
+  <div class="modal-overlay" id="modal-deed">
+    <div class="modal-card" id="modal-deed-card">
+      <div class="modal-header">
+        <h3 id="deed-title">Property Deed</h3>
+        <button class="modal-close" id="btn-close-deed">&times;</button>
+      </div>
+      <div id="deed-body" style="font-size: 0.9rem; line-height: 1.6;">
+        <!-- Filled dynamically -->
+      </div>
+      <div id="deed-actions" style="display: flex; gap: 8px; flex-wrap: wrap; margin-top: 10px;">
+        <!-- Build House / Sell House / Mortgage / Unmortgage -->
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: Auction in Progress -->
+  <div class="modal-overlay" id="modal-auction">
+    <div class="modal-card" style="text-align: center;">
+      <div class="modal-header">
+        <h3>📢 Public Property Auction</h3>
+      </div>
+      <p id="auction-prop-name" style="font-size: 1.2rem; font-weight: bold; color: var(--accent-gold);"></p>
+      <div style="margin: 15px 0;">
+        <div style="font-size: 0.85rem; color: var(--text-muted);">CURRENT HIGHEST BID</div>
+        <div id="auction-high-bid" style="font-size: 2.2rem; font-weight: 900; color: #86efac;">$10</div>
+        <div id="auction-high-bidder" style="font-size: 0.95rem; color: #94a3b8;">No bids yet</div>
+      </div>
+      <div style="display: flex; gap: 10px; justify-content: center; margin: 15px 0;">
+        <button class="btn-small" id="btn-bid-10" style="padding: 8px 14px; font-size: 1rem;">+$10</button>
+        <button class="btn-small" id="btn-bid-50" style="padding: 8px 14px; font-size: 1rem;">+$50</button>
+        <button class="btn-small" id="btn-bid-100" style="padding: 8px 14px; font-size: 1rem;">+$100</button>
+      </div>
+      <button class="btn-secondary" id="btn-pass-auction">Pass on Auction</button>
+    </div>
+  </div>
+
+  <!-- MODAL: Trade Proposal -->
+  <div class="modal-overlay" id="modal-trade">
+    <div class="modal-card" style="max-width: 600px;">
+      <div class="modal-header">
+        <h3>🤝 Trade Proposal</h3>
+        <button class="modal-close" id="btn-close-trade">&times;</button>
+      </div>
+      
+      <div class="form-group">
+        <label>Trade With Player:</label>
+        <select class="form-control" id="trade-target-player"></select>
+      </div>
+
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 10px;">
+        <!-- You Offer -->
+        <div style="background: rgba(0,0,0,0.3); padding: 12px; border-radius: 8px;">
+          <h4 style="color: #86efac; margin-bottom: 8px;">You Offer:</h4>
+          <div class="form-group">
+            <label>Cash ($):</label>
+            <input type="number" class="form-control" id="trade-offer-cash" value="0" min="0" step="50">
+          </div>
+          <div class="form-group" style="margin-top: 8px;">
+            <label>Your Properties:</label>
+            <div id="trade-offer-props-list" style="max-height: 120px; overflow-y: auto; font-size: 0.85rem;"></div>
+          </div>
+        </div>
+
+        <!-- You Request -->
+        <div style="background: rgba(0,0,0,0.3); padding: 12px; border-radius: 8px;">
+          <h4 style="color: #93c5fd; margin-bottom: 8px;">You Request:</h4>
+          <div class="form-group">
+            <label>Cash ($):</label>
+            <input type="number" class="form-control" id="trade-request-cash" value="0" min="0" step="50">
+          </div>
+          <div class="form-group" style="margin-top: 8px;">
+            <label>Their Properties:</label>
+            <div id="trade-request-props-list" style="max-height: 120px; overflow-y: auto; font-size: 0.85rem;"></div>
+          </div>
+        </div>
+      </div>
+
+      <button class="btn-primary" id="btn-send-trade-offer" style="margin-top: 15px;">Send Trade Proposal</button>
+    </div>
+  </div>
+
+  <!-- MODAL: Incoming Trade Offer Alert -->
+  <div class="modal-overlay" id="modal-trade-incoming">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3 id="incoming-trade-title">🤝 Incoming Trade Offer</h3>
+      </div>
+      <div id="incoming-trade-details" style="font-size: 0.95rem; line-height: 1.6; background: rgba(0,0,0,0.3); padding: 14px; border-radius: 8px;">
+      </div>
+      <div style="display: flex; gap: 12px; justify-content: flex-end; margin-top: 15px;">
+        <button class="btn-secondary" id="btn-reject-trade">Reject Offer</button>
+        <button class="btn-primary" id="btn-accept-trade">Accept Trade</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: Rent Negotiation (Debtor Perspective) -->
+  <div class="modal-overlay" id="modal-rent-negotiation">
+    <div class="modal-card" style="max-width: 540px;">
+      <div class="modal-header">
+        <h3 style="color: #f59e0b;">🤝 Rent Negotiation</h3>
+      </div>
+      <div id="rent-negotiation-summary" style="background: rgba(0,0,0,0.3); padding: 14px; border-radius: 8px; margin-bottom: 15px; font-size: 0.95rem; line-height: 1.6;">
+        <!-- Filled dynamically -->
+      </div>
+      <div style="display: flex; gap: 10px; margin-bottom: 15px;">
+        <button class="btn-primary" id="btn-pay-full-rent" style="flex: 1; padding: 10px; font-weight: bold; background: #16a34a;">💰 Pay Full Rent</button>
+      </div>
+      <div style="border-top: 1px solid rgba(255,255,255,0.1); padding-top: 12px;">
+        <h4 style="color: var(--accent-gold); margin-bottom: 8px;">Or Propose a Compromise Deal:</h4>
+        <div class="form-group" style="margin-bottom: 10px;">
+          <label>Discounted Cash Offer ($):</label>
+          <input type="number" class="form-control" id="rent-offer-cash" min="0" value="0" step="10">
+        </div>
+        <div class="form-group" style="margin-bottom: 10px;">
+          <label>Offer Property Deed (optional):</label>
+          <select class="form-control" id="rent-offer-property">
+            <option value="">-- None --</option>
+          </select>
+        </div>
+        <div class="form-group" id="rent-offer-jail-group" style="display: none; align-items: center; gap: 8px; margin-bottom: 10px;">
+          <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+            <input type="checkbox" id="rent-offer-jail-card" style="transform: scale(1.2);">
+            <span>Include "Get Out of Jail Free" Card</span>
+          </label>
+        </div>
+        <button class="btn-secondary" id="btn-propose-rent-deal" style="width: 100%; margin-top: 10px; background: #d97706; border-color: #f59e0b;">📤 Send Compromise Offer</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: Incoming Rent Compromise Deal (Creditor Perspective) -->
+  <div class="modal-overlay" id="modal-rent-incoming">
+    <div class="modal-card" style="max-width: 500px;">
+      <div class="modal-header">
+        <h3 style="color: #38bdf8;">🤝 Incoming Rent Compromise</h3>
+      </div>
+      <div id="incoming-rent-deal-details" style="font-size: 0.95rem; line-height: 1.6; background: rgba(0,0,0,0.3); padding: 14px; border-radius: 8px;">
+        <!-- Filled dynamically -->
+      </div>
+      <div style="display: flex; gap: 12px; justify-content: flex-end; margin-top: 15px;">
+        <button class="btn-secondary" id="btn-reject-rent-deal" style="background: #dc2626;">Reject (Demand Full Rent)</button>
+        <button class="btn-primary" id="btn-accept-rent-deal" style="background: #16a34a;">Accept Compromise</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: Neighborhood Streets Customizer -->
+  <div class="modal-overlay" id="modal-street-customizer" onclick="if (event.target === this) this.classList.remove('open');">
+    <div class="modal-card" style="max-width: 680px; max-height: 85vh; display: flex; flex-direction: column;">
+      <div class="modal-header">
+        <h3 style="color: #38bdf8;">🗺️ Customize Neighborhood Streets & Locations</h3>
+        <button class="modal-close" id="btn-close-customizer" onclick="window.closeStreetCustomizer ? window.closeStreetCustomizer() : document.getElementById('modal-street-customizer')?.classList.remove('open')">&times;</button>
+      </div>
+      <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 10px;">
+        Personalize the board with your own local streets, transit routes, and municipal fees!
+      </p>
+      <div style="display: flex; gap: 8px; margin-bottom: 12px; flex-wrap: wrap;">
+        <button type="button" class="btn-small" id="btn-preset-hometown" onclick="window.applyPresetToInputs && window.applyPresetToInputs('HOMETOWN_USA')" style="background: #0284c7;">Hometown Suburb</button>
+        <button type="button" class="btn-small" id="btn-preset-beach" onclick="window.applyPresetToInputs && window.applyPresetToInputs('BEACH_TOWN')" style="background: #059669;">Sunny Beach Bay</button>
+        <button type="button" class="btn-small" id="btn-preset-metro" onclick="window.applyPresetToInputs && window.applyPresetToInputs('METRO_HEIGHTS')" style="background: #7c3aed;">Downtown Metro</button>
+        <button type="button" class="btn-small" id="btn-reset-streets" onclick="window.resetStreetCustomizer && window.resetStreetCustomizer()" style="background: #475569; margin-left: auto;">Reset Defaults</button>
+      </div>
+      <div id="custom-streets-list" style="overflow-y: auto; flex: 1; padding-right: 6px; display: grid; grid-template-columns: 1fr 1fr; gap: 8px; max-height: 50vh;">
+        <!-- Dynamically filled with inputs for all spaces -->
+      </div>
+      <div style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 12px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 10px;">
+        <button type="button" class="btn-primary" id="btn-save-custom-streets" onclick="window.saveCustomStreets && window.saveCustomStreets()">Apply Neighborhood Names</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: Zoomed-in Title Deed Purchase & Building Showcase -->
+  <div class="modal-overlay" id="modal-deed-presentation" onclick="if (event.target === this) this.classList.remove('open');">
+    <div class="presented-deed-container">
+      <div class="presented-deed-header-badge" id="deed-showcase-event-badge">
+        🏠 PROPERTY ACQUIRED!
+      </div>
+      
+      <div class="presented-deed-card" id="presented-deed-card">
+        <!-- Colored Header Bar -->
+        <div class="presented-deed-top" id="presented-deed-top">
+          <div class="presented-deed-type-sub">HOMETOWN REALITOR TITLE DEED</div>
+          <div class="presented-deed-name" id="presented-deed-name">Maple Street</div>
+        </div>
+
+        <!-- Owner Badge Banner -->
+        <div class="presented-deed-owner-banner" id="presented-deed-owner-banner">
+          <span class="owner-label">OWNED BY:</span>
+          <span class="owner-token" id="presented-deed-owner-token">🛹</span>
+          <span class="owner-name" id="presented-deed-owner-name">Player 1</span>
+        </div>
+
+        <!-- Rent Schedule Table -->
+        <div class="presented-deed-rent-body" id="presented-deed-rent-body">
+          <!-- Dynamically filled with rent table -->
+        </div>
+
+        <!-- Deed Footer Details -->
+        <div class="presented-deed-footer" id="presented-deed-footer">
+          <!-- Mortgage value & building cost -->
+        </div>
+      </div>
+
+      <!-- Action Button & Auto-dismiss Timer Bar -->
+      <div class="presented-deed-actions">
+        <button type="button" class="btn-primary" id="btn-close-deed-presentation" onclick="document.getElementById('modal-deed-presentation')?.classList.remove('open');">
+          ✕ Continue
+        </button>
+        <div class="deed-presentation-timer-track">
+          <div class="deed-presentation-timer-bar" id="deed-timer-bar"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: Exit / End Game Confirmation -->
+  <div class="modal-overlay" id="modal-confirm-exit" onclick="if (event.target === this) this.classList.remove('open');">
+    <div class="modal-card" style="max-width: 440px; text-align: center; border: 1px solid rgba(239, 68, 68, 0.4); box-shadow: 0 15px 35px rgba(0,0,0,0.8), 0 0 25px rgba(239, 68, 68, 0.2);">
+      <div style="font-size: 2.8rem; margin-bottom: 8px;">🚪</div>
+      <h3 id="exit-modal-title" style="margin-bottom: 10px; color: #ef4444; font-size: 1.4rem;">Exit Game</h3>
+      <p id="exit-modal-desc" style="color: var(--text-muted); font-size: 0.95rem; margin-bottom: 24px; line-height: 1.5;">
+        Are you sure you want to leave this game?
+      </p>
+      <div id="exit-modal-actions" style="display: flex; flex-direction: column; gap: 10px;">
+        <!-- Injected dynamically via JS based on Host vs Player role -->
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: Winner Celebration -->
+  <div class="modal-overlay" id="modal-winner">
+    <div class="modal-card" style="text-align: center;">
+      <h1 style="font-size: 3rem; margin-bottom: 10px;">🏆</h1>
+      <h2 id="winner-name-display" style="color: var(--accent-gold); font-size: 2rem;">Alice Won!</h2>
+      <p id="winner-detail-display" style="color: var(--text-muted); margin: 15px 0;">All other players have gone bankrupt!</p>
+      <div style="display: flex; flex-direction: column; gap: 10px; margin-top: 15px;">
+        <button class="btn-primary" id="btn-rematch" style="background: linear-gradient(135deg, #10b981, #059669); font-weight: bold; font-size: 1.05rem;">🔄 Quick Rematch (Same Players & Rules)</button>
+        <button class="btn-secondary" id="btn-winner-exit" onclick="location.reload()">🚪 Return to Lobby</button>
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="client.js?v=1.7.0"></script>
+</body>
+</html>
