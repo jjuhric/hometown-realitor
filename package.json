@@ -10,10 +10,17 @@
     "test": "node tests/run-all-tests.js"
   },
   "dependencies": {
-    "express": "^4.21.2",
+    "express": "^5.2.1",
     "ws": "^8.18.0"
   },
-  "keywords": ["monopoly", "board-game", "multiplayer", "lan", "house-rules", "websocket"],
+  "keywords": [
+    "monopoly",
+    "board-game",
+    "multiplayer",
+    "lan",
+    "house-rules",
+    "websocket"
+  ],
   "author": "Antigravity",
   "license": "MIT"
 }
